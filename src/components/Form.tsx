@@ -1,4 +1,31 @@
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 export const Form = () => {
+  const validation = z.object({
+    Nome: z.string().min(1, { message: "Nome é obrigatório." }),
+    Sobrenome: z.string().min(1, { message: "Sobrenome é obrigatório." }),
+    Email: z
+      .string()
+      .min(1, { message: "E-mail é obrigatório" })
+      .email({ message: "Forneça um E-mail válido." }),
+    Senha: z
+      .string()
+      .min(8, { message: "A senha deve ter no minímo 8 caracteres." }),
+    confirmaSenha: z
+      .string()
+      .min(8, { message: "É preciso confirmar a senha." }),
+    termos: z.literal(true, {
+      errorMap: () => ({ message: "Você precisa aceitar os termos de uso." }),
+    }),
+  }).refine((data)=> data.Senha === data.confirmaSenha,{
+    path: ["confirmaSenha"],
+    message:"Senhas são diferentes!"
+  })
+
+ type ValidationSchemaForm = z.infer<typeof validation>
+
   return (
     <form className="px-8 pt-6 pb-8 mb-4">
       <div className="mb-4 md:flex md:justify-between">
@@ -15,7 +42,6 @@ export const Form = () => {
             id="Nome"
             placeholder="Nome"
           />
-          
         </div>
         <div className="md:ml-2">
           <label
@@ -63,7 +89,7 @@ export const Form = () => {
         <div className="md:ml-2">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
-            htmlFor="c_password"
+            htmlFor="confirmaSenha"
           >
             Confirme a senha :
           </label>
@@ -75,9 +101,9 @@ export const Form = () => {
         </div>
       </div>
       <div className="mb-4">
-        <input type="checkbox" id="terms" />
+        <input type="checkbox" id="termos" />
         <label
-          htmlFor="terms"
+          htmlFor="termos"
           className="ml-2 mb-2 text-sm font-bold text-gray-700"
         >
           Aceito os termos de uso.
@@ -86,7 +112,7 @@ export const Form = () => {
 
       <div className="mb-6 text-center">
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-blue-500  hover:bg-blue-700 focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Registrar Conta
