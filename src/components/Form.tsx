@@ -64,7 +64,7 @@ export const Form = () => {
             placeholder="Nome"
             {...register("Nome")}
           />
-          {errors && <p>{errors.Nome?.message}</p>}
+          {errors && <p className="text-sm text-red-500 mt-1">{errors.Nome?.message}</p>}
         </div>
         <div className="md:ml-2">
           <label
@@ -80,7 +80,7 @@ export const Form = () => {
             placeholder="Sobrenome"
             {...register("Sobrenome")}
           />
-           {errors && <p className="" >{errors.Sobrenome?.message}</p>}
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Sobrenome?.message}</p>}
         </div>
       </div>
       <div className="mb-4">
@@ -97,7 +97,7 @@ export const Form = () => {
           placeholder="Email"
           {...register("Email")}
         />
-         {errors && <p className="" >{errors.Email?.message}</p>}
+         {errors && <p className="text-sm text-red-500 mt-1" >{errors.Email?.message}</p>}
       </div>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
@@ -113,7 +113,7 @@ export const Form = () => {
             type="password"
             {...register("Senha")}
           />
-           {errors && <p className="" >{errors.Senha?.message}</p>}
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Senha?.message}</p>}
         </div>
         <div className="md:ml-2">
           <label
@@ -128,7 +128,7 @@ export const Form = () => {
             type="password"
             {...register("confirmaSenha")}
           />
-           {errors && <p className="" >{errors.confirmaSenha?.message}</p>}
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.confirmaSenha?.message}</p>}
         </div>
       </div>
       <div className="mb-4">
@@ -139,7 +139,7 @@ export const Form = () => {
         >
           Aceito os termos de uso.
         </label>
-        {errors && <p className="" >{errors.termos?.message}</p>}
+        {errors && <p className="text-sm text-red-500 mt-1" >{errors.termos?.message}</p>}
       </div>
 
       <div className="mb-6 text-center">
