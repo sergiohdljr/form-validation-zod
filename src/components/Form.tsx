@@ -18,7 +18,7 @@ export const Form = () => {
       confirmaSenha: z
         .string()
         .min(8, { message: "É preciso confirmar a senha." }),
-      termos: z.literal(true, {
+      termos: z.literal(true ,{
         errorMap: () => ({ message: "Você precisa aceitar os termos de uso." }),
       }),
     })
@@ -35,8 +35,18 @@ export const Form = () => {
     reset,
     formState: { errors },
   } = useForm<ValidationSchemaForm>({
-    resolver: zodResolver(validation),
+    resolver: zodResolver(validation)
   });
+
+  const resetFields = () => {
+    reset({
+      Nome: "",
+      Sobrenome: "",
+      Email: "",
+      Senha: "",
+      confirmaSenha: "",
+    });
+  };
 
   const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) => {
     alert(
@@ -45,7 +55,8 @@ export const Form = () => {
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
     );
-  }
+    resetFields()
+  };
 
   return (
     <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -55,7 +66,7 @@ export const Form = () => {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="Nome"
           >
-            Nome :
+            Nome:
           </label>
           <input
             className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
@@ -72,7 +83,7 @@ export const Form = () => {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="Sobrenome"
           >
-            Sobrenome :
+            Sobrenome:
           </label>
           <input
             className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
@@ -89,7 +100,7 @@ export const Form = () => {
           className="block mb-2 text-sm font-bold text-gray-700"
           htmlFor="email"
         >
-          Email :
+          Email:
         </label>
         <input
           className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
@@ -106,7 +117,7 @@ export const Form = () => {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="password"
           >
-            Senha :
+            Senha:
           </label>
           <input
             className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
@@ -121,7 +132,7 @@ export const Form = () => {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="confirmaSenha"
           >
-            Confirme a senha :
+            Confirme a senha:
           </label>
           <input
             className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
