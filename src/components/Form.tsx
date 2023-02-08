@@ -43,8 +43,8 @@ export const Form = () => {
        Nome : ${data.Nome} ${data.Sobrenome}
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
-    );
-  };
+    )
+  }
 
   return (
     <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -63,6 +63,7 @@ export const Form = () => {
             placeholder="Nome"
             {...register("Nome")}
           />
+          {errors && <p className="text-sm text-red-500 mt-1">{errors.Nome?.message}</p>}
         </div>
 
         <div className="md:ml-2">
@@ -79,6 +80,7 @@ export const Form = () => {
             placeholder="Sobrenome"
             {...register("Sobrenome")}
           />
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Sobrenome?.message}</p>}
         </div>
       </div>
       <div className="mb-4">
@@ -95,6 +97,7 @@ export const Form = () => {
           placeholder="Email"
           {...register("Email")}
         />
+         {errors && <p className="text-sm text-red-500 mt-1" >{errors.Email?.message}</p>}
       </div>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
@@ -110,6 +113,7 @@ export const Form = () => {
             type="password"
             {...register("Senha")}
           />
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Senha?.message}</p>}
         </div>
         <div className="md:ml-2">
           <label
@@ -124,6 +128,7 @@ export const Form = () => {
             type="password"
             {...register("confirmaSenha")}
           />
+           {errors && <p className="text-sm text-red-500 mt-1" >{errors.confirmaSenha?.message}</p>}
         </div>
       </div>
       <div className="mb-4">
@@ -134,6 +139,7 @@ export const Form = () => {
         >
           Aceito os termos de uso.
         </label>
+        {errors && <p className="text-sm text-red-500 mt-1" >{errors.termos?.message}</p>}
       </div>
 
       <div className="mb-6 text-center">
