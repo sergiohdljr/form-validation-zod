@@ -37,14 +37,14 @@ export const Form = () => {
     resolver: zodResolver(validation),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) =>{
+  const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) => {
     alert(
       `Dados do usuário registrados com sucesso!
        Nome : ${data.Nome} ${data.Sobrenome}
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
-    )
-  }
+    );
+  };
 
   return (
     <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -64,6 +64,7 @@ export const Form = () => {
             {...register("Nome")}
           />
         </div>
+
         <div className="md:ml-2">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
