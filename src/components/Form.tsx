@@ -2,6 +2,8 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "./errorMessage";
+import clsx from "clsx";
+import { useState } from "react";
 
 export const Form = () => {
   const validation = z
@@ -33,7 +35,7 @@ export const Form = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors},
   } = useForm<ValidationSchemaForm>({
     resolver: zodResolver(validation)
   });
@@ -69,7 +71,9 @@ export const Form = () => {
             Nome:
           </label>
           <input
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
+             "border-red-400": errors.Nome
+            })}
             type="text"
             id="Nome"
             placeholder="Nome"
@@ -86,7 +90,9 @@ export const Form = () => {
             Sobrenome:
           </label>
           <input
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
+              "border-red-400": errors.Sobrenome
+             })}
             id="Sobrenome"
             type="text"
             placeholder="Sobrenome"
@@ -103,7 +109,9 @@ export const Form = () => {
           Email:
         </label>
         <input
-          className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+          className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
+            "border-red-400": errors.Email
+           })}
           id="email"
           type="email"
           placeholder="Email"
@@ -120,7 +128,9 @@ export const Form = () => {
             Senha:
           </label>
           <input
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
+              "border-red-400": errors.Senha
+             })}
             id="Senha"
             type="password"
             {...register("Senha")}
@@ -135,7 +145,9 @@ export const Form = () => {
             Confirme a senha:
           </label>
           <input
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+             className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
+              "border-red-400": errors.confirmaSenha
+             })}
             id="confirmaSenha"
             type="password"
             {...register("confirmaSenha")}
