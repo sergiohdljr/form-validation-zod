@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "./errorMessage";
 
 export const Form = () => {
   const validation = z
@@ -43,7 +44,7 @@ export const Form = () => {
        Nome : ${data.Nome} ${data.Sobrenome}
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
-    )
+    );
   }
 
   return (
@@ -63,7 +64,7 @@ export const Form = () => {
             placeholder="Nome"
             {...register("Nome")}
           />
-          {errors && <p className="text-sm text-red-500 mt-1">{errors.Nome?.message}</p>}
+          {errors && <ErrorMessage mensagem={errors.Nome?.message} />}
         </div>
 
         <div className="md:ml-2">
@@ -80,7 +81,7 @@ export const Form = () => {
             placeholder="Sobrenome"
             {...register("Sobrenome")}
           />
-           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Sobrenome?.message}</p>}
+          {errors && <ErrorMessage mensagem={errors.Sobrenome?.message} />}
         </div>
       </div>
       <div className="mb-4">
@@ -97,7 +98,7 @@ export const Form = () => {
           placeholder="Email"
           {...register("Email")}
         />
-         {errors && <p className="text-sm text-red-500 mt-1" >{errors.Email?.message}</p>}
+        {errors && <ErrorMessage mensagem={errors.Email?.message} />}
       </div>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
@@ -113,7 +114,7 @@ export const Form = () => {
             type="password"
             {...register("Senha")}
           />
-           {errors && <p className="text-sm text-red-500 mt-1" >{errors.Senha?.message}</p>}
+          {errors && <ErrorMessage mensagem={errors.Senha?.message} />}
         </div>
         <div className="md:ml-2">
           <label
@@ -128,7 +129,7 @@ export const Form = () => {
             type="password"
             {...register("confirmaSenha")}
           />
-           {errors && <p className="text-sm text-red-500 mt-1" >{errors.confirmaSenha?.message}</p>}
+          {errors && <ErrorMessage mensagem={errors.confirmaSenha?.message} />}
         </div>
       </div>
       <div className="mb-4">
@@ -139,7 +140,7 @@ export const Form = () => {
         >
           Aceito os termos de uso.
         </label>
-        {errors && <p className="text-sm text-red-500 mt-1" >{errors.termos?.message}</p>}
+        {errors && <ErrorMessage mensagem={errors.termos?.message} />}
       </div>
 
       <div className="mb-6 text-center">
