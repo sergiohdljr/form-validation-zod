@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { isDirty, z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "./errorMessage";
@@ -20,7 +20,7 @@ export const Form = () => {
       confirmaSenha: z
         .string()
         .min(8, { message: "É preciso confirmar a senha." }),
-      termos: z.literal(true ,{
+      termos: z.literal(true, {
         errorMap: () => ({ message: "Você precisa aceitar os termos de uso." }),
       }),
     })
@@ -35,20 +35,14 @@ export const Form = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors},
+    formState: { errors, dirtyFields },
   } = useForm<ValidationSchemaForm>({
-    resolver: zodResolver(validation)
+    resolver: zodResolver(validation),
+    resetOptions:{
+      keepValues:false
+    },
+    mode:"onChange",
   });
-
-  const resetFields = () => {
-    reset({
-      Nome: "",
-      Sobrenome: "",
-      Email: "",
-      Senha: "",
-      confirmaSenha: "",
-    });
-  };
 
   const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) => {
     alert(
@@ -57,7 +51,14 @@ export const Form = () => {
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
     );
-    resetFields()
+    reset({
+      Nome:"",
+      Sobrenome:"",
+      Email:"",
+      Senha:"",
+      confirmaSenha:"",
+      termos: false
+    })
   };
 
   return (
@@ -71,9 +72,13 @@ export const Form = () => {
             Nome:
           </label>
           <input
-            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
-             "border-red-400": errors.Nome
-            })}
+            className={clsx(
+              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              {
+                "focus:border-green-400 border-green-400": !errors.Nome && dirtyFields.Nome ,
+                "focus:border-red-400 border-red-400": errors.Nome
+              }
+            )}
             type="text"
             id="Nome"
             placeholder="Nome"
@@ -90,9 +95,13 @@ export const Form = () => {
             Sobrenome:
           </label>
           <input
-            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
-              "border-red-400": errors.Sobrenome
-             })}
+            className={clsx(
+              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              {
+                "border-green-400": !errors.Sobrenome && dirtyFields.Sobrenome,
+                "border-red-400": errors.Sobrenome,
+              }
+            )}
             id="Sobrenome"
             type="text"
             placeholder="Sobrenome"
@@ -109,9 +118,13 @@ export const Form = () => {
           Email:
         </label>
         <input
-          className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
-            "border-red-400": errors.Email
-           })}
+          className={clsx(
+            "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+            {
+              "border-green-400": !errors.Email && dirtyFields.Email,
+              "border-red-400": errors.Email,
+            }
+          )}
           id="email"
           type="email"
           placeholder="Email"
@@ -128,9 +141,13 @@ export const Form = () => {
             Senha:
           </label>
           <input
-            className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
-              "border-red-400": errors.Senha
-             })}
+            className={clsx(
+              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              {
+                "border-green-400": !errors.Senha && dirtyFields.Senha,
+                "border-red-400": errors.Senha,
+              }
+            )}
             id="Senha"
             type="password"
             {...register("Senha")}
@@ -145,9 +162,14 @@ export const Form = () => {
             Confirme a senha:
           </label>
           <input
-             className={clsx("w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",{
-              "border-red-400": errors.confirmaSenha
-             })}
+            className={clsx(
+              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              {
+                "border-green-400":
+                  !errors.confirmaSenha && dirtyFields.confirmaSenha,
+                "border-red-400": errors.confirmaSenha,
+              }
+            )}
             id="confirmaSenha"
             type="password"
             {...register("confirmaSenha")}
@@ -168,9 +190,8 @@ export const Form = () => {
 
       <div className="mb-6 text-center">
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-blue-500  hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
+          className="w-full px-4 py-2 font-bold text-white bg-blue-500  hover:bg-blue-700 focus:outline-none focus:shadow-outline disabled:bg-opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          type="submit">
           Registrar Conta
         </button>
       </div>
