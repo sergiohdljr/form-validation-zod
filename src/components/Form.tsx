@@ -1,9 +1,10 @@
-import { isDirty, z } from "zod";
+import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "./errorMessage";
 import clsx from "clsx";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { Event } from "clipboard";
 
 export const Form = () => {
   const validation = z
@@ -35,13 +36,13 @@ export const Form = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
   } = useForm<ValidationSchemaForm>({
     resolver: zodResolver(validation),
-    resetOptions:{
-      keepValues:false
+    resetOptions: {
+      keepValues: false,
     },
-    mode:"onChange",
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) => {
@@ -52,14 +53,16 @@ export const Form = () => {
        Senha: ${data.Senha}`
     );
     reset({
-      Nome:"",
-      Sobrenome:"",
-      Email:"",
-      Senha:"",
-      confirmaSenha:"",
-      termos: false
-    })
+      Nome: "",
+      Sobrenome: "",
+      Email: "",
+      Senha: "",
+      confirmaSenha: "",
+      termos: false,
+    });
   };
+
+  const [disabled, setDisabled] = useState(true);
 
   return (
     <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -75,8 +78,9 @@ export const Form = () => {
             className={clsx(
               "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
               {
-                "focus:border-green-400 border-green-400": !errors.Nome && dirtyFields.Nome ,
-                "focus:border-red-400 border-red-400": errors.Nome
+                "focus:border-green-400 border-green-400":
+                  !errors.Nome && dirtyFields.Nome,
+                "focus:border-red-400 border-red-400": errors.Nome,
               }
             )}
             type="text"
@@ -178,7 +182,14 @@ export const Form = () => {
         </div>
       </div>
       <div className="mb-4">
-        <input type="checkbox" id="termos" {...register("termos")} />
+        <input
+          type="checkbox"
+          id="termos"
+          {...register("termos", {
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+              setDisabled(!e.target.checked),
+          })}
+        />
         <label
           htmlFor="termos"
           className="ml-2 mb-2 text-sm font-bold text-gray-700"
@@ -191,7 +202,9 @@ export const Form = () => {
       <div className="mb-6 text-center">
         <button
           className="w-full px-4 py-2 font-bold text-white bg-blue-500  hover:bg-blue-700 focus:outline-none focus:shadow-outline disabled:bg-opacity-40 disabled:cursor-not-allowed cursor-pointer"
-          type="submit">
+          type="submit"
+          disabled={disabled}
+        >
           Registrar Conta
         </button>
       </div>
