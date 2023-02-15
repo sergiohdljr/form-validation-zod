@@ -192,10 +192,10 @@ export const Form = () => {
               type="password"
               {...register("Senha")}
             />
-            {errors.Email ? (
+            {errors.Senha ? (
               <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
             ) : null}
-            {!errors.Email && dirtyFields.Email ? (
+            {!errors.Senha && dirtyFields.Senha ? (
               <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
             ) : null}
           </div>
