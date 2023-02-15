@@ -3,8 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "./errorMessage";
 import clsx from "clsx";
-import { FormEvent, useState } from "react";
-import { Event } from "clipboard";
+import { useState } from "react";
+import { XCircle, CheckCircle } from "phosphor-react";
 
 export const Form = () => {
   const validation = z
@@ -36,7 +36,7 @@ export const Form = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, dirtyFields, isValid },
+    formState: { errors, dirtyFields },
   } = useForm<ValidationSchemaForm>({
     resolver: zodResolver(validation),
     resetOptions: {
@@ -52,6 +52,7 @@ export const Form = () => {
        E-mail: ${data.Email}
        Senha: ${data.Senha}`
     );
+
     reset({
       Nome: "",
       Sobrenome: "",
@@ -74,21 +75,31 @@ export const Form = () => {
           >
             Nome:
           </label>
-          <input
+          <div
             className={clsx(
-              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              "min-h-fit w-full flex justify-center items-center gap-2 border rounded",
               {
                 "focus:border-green-400 border-green-400":
                   !errors.Nome && dirtyFields.Nome,
                 "focus:border-red-400 border-red-400": errors.Nome,
               }
             )}
-            type="text"
-            id="Nome"
-            placeholder="Nome"
-            {...register("Nome")}
-          />
-          {errors && <ErrorMessage mensagem={errors.Nome?.message} />}
+          >
+            <input
+              className="m-2 text-sm appearance-none border-none outline-none flx flex-grow"
+              type="text"
+              id="Nome"
+              placeholder="Nome"
+              {...register("Nome")}
+            />
+            {errors.Nome ? (
+              <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
+            ) : null}
+            {!errors.Nome && dirtyFields.Nome ? (
+              <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
+            ) : null}
+          </div>
+          {errors ? <ErrorMessage mensagem={errors.Nome?.message} /> : null}
         </div>
 
         <div className="md:ml-2">
@@ -98,19 +109,30 @@ export const Form = () => {
           >
             Sobrenome:
           </label>
-          <input
+          <div
             className={clsx(
-              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              "min-h-fit w-full flex justify-center items-center gap-2 border rounded",
               {
-                "border-green-400": !errors.Sobrenome && dirtyFields.Sobrenome,
-                "border-red-400": errors.Sobrenome,
+                "focus:border-green-400 border-green-400":
+                  !errors.Sobrenome && dirtyFields.Sobrenome,
+                "focus:border-red-400 border-red-400": errors.Sobrenome,
               }
             )}
-            id="Sobrenome"
-            type="text"
-            placeholder="Sobrenome"
-            {...register("Sobrenome")}
-          />
+          >
+            <input
+              className="m-2 text-sm appearance-none border-none outline-none flx flex-grow"
+              id="Sobrenome"
+              type="text"
+              placeholder="Sobrenome"
+              {...register("Sobrenome")}
+            />
+            {errors.Sobrenome ? (
+              <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
+            ) : null}
+            {!errors.Sobrenome && dirtyFields.Sobrenome ? (
+              <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
+            ) : null}
+          </div>
           {errors && <ErrorMessage mensagem={errors.Sobrenome?.message} />}
         </div>
       </div>
@@ -121,19 +143,30 @@ export const Form = () => {
         >
           Email:
         </label>
-        <input
+        <div
           className={clsx(
-            "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+            "min-h-fit w-full flex justify-center items-center gap-2 border rounded",
             {
               "border-green-400": !errors.Email && dirtyFields.Email,
               "border-red-400": errors.Email,
             }
           )}
-          id="email"
-          type="email"
-          placeholder="Email"
-          {...register("Email")}
-        />
+        >
+          <input
+            className="m-2 text-sm appearance-none border-none outline-none flx flex-grow"
+            id="email"
+            type="email"
+            placeholder="Email"
+            {...register("Email")}
+          />
+          {errors.Email ? (
+            <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
+          ) : null}
+          {!errors.Email && dirtyFields.Email ? (
+            <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
+          ) : null}
+        </div>
+
         {errors && <ErrorMessage mensagem={errors.Email?.message} />}
       </div>
       <div className="mb-4 md:flex md:justify-between">
@@ -144,18 +177,28 @@ export const Form = () => {
           >
             Senha:
           </label>
-          <input
+          <div
             className={clsx(
-              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              "min-h-fit w-full flex justify-center items-center gap-2 border rounded",
               {
                 "border-green-400": !errors.Senha && dirtyFields.Senha,
                 "border-red-400": errors.Senha,
               }
             )}
-            id="Senha"
-            type="password"
-            {...register("Senha")}
-          />
+          >
+            <input
+              className="m-2 text-sm appearance-none border-none outline-none flx flex-grow"
+              id="Senha"
+              type="password"
+              {...register("Senha")}
+            />
+            {errors.Email ? (
+              <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
+            ) : null}
+            {!errors.Email && dirtyFields.Email ? (
+              <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
+            ) : null}
+          </div>
           {errors && <ErrorMessage mensagem={errors.Senha?.message} />}
         </div>
         <div className="md:ml-2">
@@ -165,19 +208,29 @@ export const Form = () => {
           >
             Confirme a senha:
           </label>
-          <input
+          <div
             className={clsx(
-              "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline transition-all duration-100",
+              "min-h-fit w-full flex justify-center items-center gap-2 border rounded",
               {
                 "border-green-400":
                   !errors.confirmaSenha && dirtyFields.confirmaSenha,
                 "border-red-400": errors.confirmaSenha,
               }
             )}
-            id="confirmaSenha"
-            type="password"
-            {...register("confirmaSenha")}
-          />
+          >
+            <input
+              className="m-2 text-sm appearance-none border-none outline-none flx flex-grow"
+              id="confirmaSenha"
+              type="password"
+              {...register("confirmaSenha")}
+            />
+            {errors.confirmaSenha ? (
+              <XCircle width={24} height={24} color={"rgb(248 113 113)"} />
+            ) : null}
+            {!errors.confirmaSenha && dirtyFields.confirmaSenha ? (
+              <CheckCircle width={24} height={24} color={"rgb(74 222 128)"} />
+            ) : null}
+          </div>
           {errors && <ErrorMessage mensagem={errors.confirmaSenha?.message} />}
         </div>
       </div>
