@@ -54,7 +54,6 @@ export const Form = () => {
       Email: "",
       Senha: "",
       confirmaSenha: "",
-      termos: false,
     });
   };
 
