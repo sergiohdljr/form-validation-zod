@@ -45,13 +45,8 @@ export const Form = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<ValidationSchemaForm> = (data) => {
-    alert(
-      `Dados do usuário registrados com sucesso!
-       Nome : ${data.Nome} ${data.Sobrenome}
-       E-mail: ${data.Email}
-       Senha: ${data.Senha}`
-    );
+  const onSubmit: SubmitHandler<ValidationSchemaForm> = () => {
+    alert("Dados do usuário registrados com sucesso!");
 
     reset({
       Nome: "",
